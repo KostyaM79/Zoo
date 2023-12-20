@@ -18,6 +18,9 @@ namespace AnimalsApplication
 {
     public partial class MainForm : Form, IView
     {
+        //Удалить потом
+        IEnumerable<IFactoryListItem> f;
+
         private readonly Presenter presenter;
         private readonly List<IAnimalListItem> animalItems = new List<IAnimalListItem>();
 
@@ -39,7 +42,8 @@ namespace AnimalsApplication
         /// <summary>
         /// Возвращает коллекцию фабрик для создания животных
         /// </summary>
-        public IEnumerable<IFactoryListItem> Factories { set => classesComboBox.DataSource = value.ToList(); }
+        //public IEnumerable<IFactoryListItem> Factories { set => classesComboBox.DataSource = value.ToList(); }
+        public IEnumerable<IFactoryListItem> Factories { set => f = value; }
 
         /// <summary>
         /// Задаёт или возвращает коллекцию животных
@@ -72,7 +76,10 @@ namespace AnimalsApplication
         private void MainForm_Shown(object sender, EventArgs e)
         {
             //Инициируем фильтрацию
-            NeedToApplyFilter(new NeedToApplyFilterEventArgs((classesComboBox.SelectedItem as FactoryItem).AnimalClassName, animalItems));
+            //NeedToApplyFilter(new NeedToApplyFilterEventArgs((classesComboBox.SelectedItem as FactoryItem).AnimalClassName, animalItems));
+
+            if (classesComboBox.SelectedItem != null)
+                NeedToApplyFilter(new NeedToApplyFilterEventArgs(classesComboBox.SelectedItem.ToString(), animalItems));
         }
 
         /// <summary>
@@ -92,7 +99,10 @@ namespace AnimalsApplication
         {
             //При выборе пользователем какого-либо класса животного,
             //сообщаем об этом в Presenter, чтобы тот передал отфильтрованные данные в listBox2
-            NeedToApplyFilter(new NeedToApplyFilterEventArgs((classesComboBox.SelectedItem as FactoryItem).AnimalClassName, animalItems));
+
+            //NeedToApplyFilter(new NeedToApplyFilterEventArgs((classesComboBox.SelectedItem as FactoryItem).AnimalClassName, animalItems));
+
+            NeedToApplyFilter(new NeedToApplyFilterEventArgs(classesComboBox.SelectedItem.ToString(), animalItems));
         }
 
         /// <summary>

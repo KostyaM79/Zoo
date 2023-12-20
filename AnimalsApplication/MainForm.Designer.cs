@@ -88,6 +88,12 @@ namespace AnimalsApplication
             this.classesComboBox.DisplayMember = "AnimalClassName";
             this.classesComboBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.classesComboBox.FormattingEnabled = true;
+            this.classesComboBox.Items.AddRange(new object[] {
+            "Рыбы",
+            "Земноводные",
+            "Пресмыкающиеся",
+            "Птицы",
+            "Млекопитающие"});
             this.classesComboBox.Location = new System.Drawing.Point(10, 10);
             this.classesComboBox.Margin = new System.Windows.Forms.Padding(10);
             this.classesComboBox.Name = "classesComboBox";

@@ -19,9 +19,12 @@ namespace AnimalsLibrary
         /// </summary>
         /// <param name="animalType"></param>
         /// <returns></returns>
-        public AbstractAnimal CreateAnimal(string animalType)
+        public AbstractAnimal CreateAnimal(string animalType, IRepository repo)
         {
-            return new Fish(animalType);
+            Fish fish = new Fish(animalType);
+            repo.Add(fish);
+            repo.Save();
+            return fish;
         }
     }
 }

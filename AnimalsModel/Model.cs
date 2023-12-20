@@ -38,7 +38,7 @@ namespace AnimalsModel
         /// <returns></returns>
         public IAnimalListItem CreateAnimal(IFactoryListItem factoryItem, string animalType)
         {
-            AbstractAnimal animal = (factoryItem as FactoryItem).Factory.CreateAnimal(animalType);
+            AbstractAnimal animal = (factoryItem as FactoryItem).Factory.CreateAnimal(animalType, Repository);
             return new AnimalItem(animal);
         }
 
@@ -48,15 +48,7 @@ namespace AnimalsModel
         /// <returns></returns>
         public IEnumerable<IFactoryListItem> GetFactories() => AnimalLibrary.GetFactoryCollection().Select(e => new FactoryItem(e));
 
-        /// <summary>
-        /// Добавляет новое животное в репозиторий
-        /// </summary>
-        /// <param name="animalItem"></param>
-        public void AddAnimal(IAnimalListItem animalItem)
-        {
-            Repository.Add((animalItem as AnimalItem).Animal);
-            Repository.Save();
-        }
+        public IFactoryListItem GetNullFactory() => new FactoryItem(AnimalLibrary.GetNullFactory());
 
         /// <summary>
         /// Загружает всех животных в репозиторий

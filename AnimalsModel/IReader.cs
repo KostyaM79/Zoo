@@ -12,6 +12,8 @@ namespace AnimalsRepository
     /// </summary>
     public interface IReader
     {
-        void Read(List<AbstractAnimal>animals, Model model, string fileName);
+        //void Read(List<AbstractAnimal>animals, Model model, string fileName);
+
+        void Read(IRepository animals, Model model, string fileName);
     }
 }

@@ -12,5 +12,7 @@ namespace AnimalsModel
     public interface IAnimalLibrary
     {
         IEnumerable<IFactory> GetFactoryCollection();
+
+        IFactory GetNullFactory();
     }
 }

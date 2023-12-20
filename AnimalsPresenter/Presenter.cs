@@ -37,7 +37,6 @@ namespace AnimalsPresenter
             set
             {
                 view = value;                                               //Сохраняем view в закрытое поле
-                view.Factories = GetListItems();                            //Передаём в view коллекцию фабрик
                 view.Animals = LoadAnimals().ToList<IAnimalListItem>();     //Передаём в view загруженную коллекцию животных
             }
         }
@@ -47,10 +46,14 @@ namespace AnimalsPresenter
         /// </summary>
         public void AddNewAnimal()
         {
-            IFactoryListItem factoryItem = view.SelectedAnimalFactory;
-            IAnimalListItem animalItem = model.CreateAnimal(factoryItem, view.AnimalType);
-            model.AddAnimal(animalItem);
-            view.AddAnimalToList(animalItem);
+            IEnumerable<IFactoryListItem> factories = model.GetFactories();
+            IFactoryListItem concreteFactory = model.GetNullFactory();
+            
+            foreach (IFactoryListItem fac in factories)
+                if (fac.AnimalClassName == view.SelectedAnimalClass) concreteFactory = fac;
+
+            IAnimalListItem animal = model.CreateAnimal(concreteFactory, view.AnimalType);
+            view.AddAnimalToList(animal);
         }
 
         /// <summary>
@@ -71,8 +74,7 @@ namespace AnimalsPresenter
         /// <returns></returns>
         public IEnumerable<IAnimalListItem> LoadAnimals()
         {
-            Model.LoadAnimals();                                                                        //Загружаем животных                                 
-            //IEnumerable<IAnimalListItem> items = Model.Repository.Animals.Select(e => new AnimalItem(e));    //Оборачиваем животных в AnimalItem
+            Model.LoadAnimals();                                                                        //Загружаем животных
             IEnumerable<IAnimalListItem> items = model.GetAnimalItems();
             return items;                                                                               //Возвращаем коллекцию экземпляров AnimalItem
         }

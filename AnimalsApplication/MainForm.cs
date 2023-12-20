@@ -18,9 +18,6 @@ namespace AnimalsApplication
 {
     public partial class MainForm : Form, IView
     {
-        //Удалить потом
-        IEnumerable<IFactoryListItem> f;
-
         private readonly Presenter presenter;
         private readonly List<IAnimalListItem> animalItems = new List<IAnimalListItem>();
 
@@ -36,14 +33,9 @@ namespace AnimalsApplication
             NeedToApplyFilter += e => presenter.ApplyFilterToList(e.AnimalList, e.AnimalClassName);
         }
 
+        //--------------------------------------------------------------------------------------------------------------
         #region Свойства
-        public IFactoryListItem SelectedAnimalFactory => classesComboBox.SelectedItem as IFactoryListItem;
-
-        /// <summary>
-        /// Возвращает коллекцию фабрик для создания животных
-        /// </summary>
-        //public IEnumerable<IFactoryListItem> Factories { set => classesComboBox.DataSource = value.ToList(); }
-        public IEnumerable<IFactoryListItem> Factories { set => f = value; }
+        public string SelectedAnimalClass => classesComboBox.SelectedItem.ToString();
 
         /// <summary>
         /// Задаёт или возвращает коллекцию животных
@@ -67,6 +59,7 @@ namespace AnimalsApplication
         public ISaveFileView SaveFileObj => new SaveFileDataObject();
         #endregion
 
+        //--------------------------------------------------------------------------------------------------------------
         #region Обработчики событий
         /// <summary>
         /// Обработчик события Shown формы
@@ -76,8 +69,6 @@ namespace AnimalsApplication
         private void MainForm_Shown(object sender, EventArgs e)
         {
             //Инициируем фильтрацию
-            //NeedToApplyFilter(new NeedToApplyFilterEventArgs((classesComboBox.SelectedItem as FactoryItem).AnimalClassName, animalItems));
-
             if (classesComboBox.SelectedItem != null)
                 NeedToApplyFilter(new NeedToApplyFilterEventArgs(classesComboBox.SelectedItem.ToString(), animalItems));
         }
@@ -99,9 +90,6 @@ namespace AnimalsApplication
         {
             //При выборе пользователем какого-либо класса животного,
             //сообщаем об этом в Presenter, чтобы тот передал отфильтрованные данные в listBox2
-
-            //NeedToApplyFilter(new NeedToApplyFilterEventArgs((classesComboBox.SelectedItem as FactoryItem).AnimalClassName, animalItems));
-
             NeedToApplyFilter(new NeedToApplyFilterEventArgs(classesComboBox.SelectedItem.ToString(), animalItems));
         }
 
@@ -126,6 +114,7 @@ namespace AnimalsApplication
         }
         #endregion
 
+        //--------------------------------------------------------------------------------------------------------------
         #region Открытые методы
         /// <summary>
         /// Добавляет животное в listBox
@@ -138,6 +127,7 @@ namespace AnimalsApplication
         }
         #endregion
 
+        //--------------------------------------------------------------------------------------------------------------
         #region Закрытые методы
         /// <summary>
         /// Добавляет в listBox коллекцию животных
@@ -176,7 +166,7 @@ namespace AnimalsApplication
 
                 NeedToApplyFilter(                              //Вызываем событие инициирующее фильтрацию второго списка животных
                     new NeedToApplyFilterEventArgs(             //
-                        SelectedAnimalFactory.AnimalClassName,  //
+                        SelectedAnimalClass,                    //
                         animalItems));                          //
 
                 typeTextBox.Clear();                            //Очищаем поле ввода вида животного

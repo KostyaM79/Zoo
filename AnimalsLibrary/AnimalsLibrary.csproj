@@ -48,6 +48,8 @@
     <Compile Include="Library.cs" />
     <Compile Include="Mammal.cs" />
     <Compile Include="MammalFactory.cs" />
+    <Compile Include="NullAnimal.cs" />
+    <Compile Include="NullFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

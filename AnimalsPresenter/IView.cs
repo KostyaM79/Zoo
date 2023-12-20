@@ -17,12 +17,8 @@ namespace AnimalsView
         /// <summary>
         /// Возвращает фабрику
         /// </summary>
-        IFactoryListItem SelectedAnimalFactory { get; }
-
-        /// <summary>
-        /// Задаёт источник данных для списка фабрик
-        /// </summary>
-        IEnumerable<IFactoryListItem> Factories { set; }
+        //IFactoryListItem SelectedAnimalFactory { get; }
+        string SelectedAnimalClass { get; }
 
         /// <summary>
         /// Возвращает вид животного, введённый пользователем

@@ -17,7 +17,7 @@ namespace AnimalsModel
 
         IEnumerable<IFactoryListItem> GetFactories();
 
-        void AddAnimal(IAnimalListItem animal);
+        IFactoryListItem GetNullFactory();
 
         void LoadAnimals();
 

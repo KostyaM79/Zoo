@@ -39,7 +39,7 @@ namespace AnimalsRepository
         /// Источник данных определяется конкретным загрузчиком.
         /// </summary>
         /// <param name="model"></param>
-        public void Load(Model model) => loader.Read(animals, model, "FileAnimals.xml");
+        public void Load(Model model) => loader.Read(this, model, "FileAnimals.xml");
 
         /// <summary>
         /// Создаёт и возвращает коллекцию писателей

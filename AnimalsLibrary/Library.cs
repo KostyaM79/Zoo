@@ -33,6 +33,11 @@ namespace AnimalsLibrary
             return factories;                                           //Возвращаем коллекцию фабрик
         }
 
+        public IFactory GetNullFactory()
+        {
+            return new NullFactory();
+        }
+
         /// <summary>
         /// Отбирает из переданной коллекции типов, только типы фабрик
         /// </summary>

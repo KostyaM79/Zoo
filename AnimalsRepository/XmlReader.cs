@@ -19,9 +19,9 @@ namespace AnimalsRepository
         /// </summary>
         /// <param name="animals"></param>
         /// <param name="model"></param>
-        public void Read(List<AbstractAnimal>animals, Model model, string fileName)
+        public void Read(IRepository animals, Model model, string fileName)
         {
-            animals.Clear();                                                                        //Очищаем коллекцию
+            animals.Animals.Clear();                                                                        //Очищаем коллекцию
             XmlDocument doc = new XmlDocument();                                                    //Создаём Xml-документ
 
             //Если файл существует, загружаем из него данные
@@ -39,7 +39,7 @@ namespace AnimalsRepository
         /// <param name="doc"></param>
         /// <param name="factories"></param>
         /// <param name="animals"></param>
-        private void CreateAllAnimals(XmlDocument doc, IEnumerable<IFactory> factories, List<AbstractAnimal> animals)
+        private void CreateAllAnimals(XmlDocument doc, IEnumerable<IFactory> factories, IRepository animals)
         {
             //В цикле перебираем все узлы Xml-документа, соответствующие классам животных
             foreach (XmlElement el in doc.DocumentElement.ChildNodes)
@@ -55,12 +55,12 @@ namespace AnimalsRepository
         /// <param name="animals"></param>
         /// <param name="el"></param>
         /// <param name="factory"></param>
-        private void CreateAnimalsOfClass(List<AbstractAnimal> animals, XmlElement el, IFactory factory)
+        private void CreateAnimalsOfClass(IRepository animals, XmlElement el, IFactory factory)
         {
             //В цикле перебираем всех животных данного класса
             foreach (XmlElement e in el.ChildNodes)
             {
-                animals.Add(factory.CreateAnimal(e.Attributes["AnimalType"].Value));      //По каждой записи создаём экземпляр животного
+                factory.CreateAnimal(e.Attributes["AnimalType"].Value, animals);      //По каждой записи создаём экземпляр животного
             }
         }
     }

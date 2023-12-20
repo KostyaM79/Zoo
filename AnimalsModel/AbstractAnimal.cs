@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnimalsView;
 
 namespace AnimalsModel
 {
@@ -20,5 +21,6 @@ namespace AnimalsModel
         /// Возвращает вид животного
         /// </summary>
         public string AnimslType { get; protected set; }
+
     }
 }

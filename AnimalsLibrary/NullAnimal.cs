@@ -11,5 +11,6 @@ namespace AnimalsLibrary
     {
         public override string AnimalClassName => "Несуществующий класс";
 
+        public override void AddYourselfToList(List<string> list) { }
     }
 }

@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractAnimal.cs" />
-    <Compile Include="AnimalItem.cs" />
     <Compile Include="FactoryItem.cs" />
     <Compile Include="IAnimalLibrary.cs" />
     <Compile Include="IFactory.cs" />

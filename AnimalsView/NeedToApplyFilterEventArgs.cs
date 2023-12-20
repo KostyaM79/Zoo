@@ -11,7 +11,7 @@ namespace AnimalsView
     /// </summary>
     public class NeedToApplyFilterEventArgs : EventArgs
     {
-        public NeedToApplyFilterEventArgs(string animalClassName, List<IAnimalListItem> items)
+        public NeedToApplyFilterEventArgs(string animalClassName, List<string> items)
         {
             AnimalClassName = animalClassName;
             AnimalList = items;
@@ -20,7 +20,7 @@ namespace AnimalsView
         /// <summary>
         /// Возвращает коллекцию животных
         /// </summary>
-        public List<IAnimalListItem> AnimalList { get; private set; }
+        public List<string> AnimalList { get; private set; }
 
         /// <summary>
         /// Возвращает название класса животного

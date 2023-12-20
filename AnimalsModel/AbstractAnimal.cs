@@ -22,5 +22,9 @@ namespace AnimalsModel
         /// </summary>
         public string AnimslType { get; protected set; }
 
+        public virtual void AddYourselfToList(List<string> list)
+        {
+            list.Add(AnimslType);
+        }
     }
 }

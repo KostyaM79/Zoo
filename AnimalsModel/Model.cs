@@ -36,10 +36,10 @@ namespace AnimalsModel
         /// <param name="factoryItem"></param>
         /// <param name="animalType"></param>
         /// <returns></returns>
-        public IAnimalListItem CreateAnimal(IFactoryListItem factoryItem, string animalType)
+        public void CreateAnimal(IFactoryListItem factoryItem, string animalType, List<string> list)
         {
             AbstractAnimal animal = (factoryItem as FactoryItem).Factory.CreateAnimal(animalType, Repository);
-            return new AnimalItem(animal);
+            animal.AddYourselfToList(list);
         }
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace AnimalsModel
             writers.ElementAt(saver.FilterIndex - 1).Write(Repository.Animals, saver.FilePath);
         }
 
-        public IEnumerable<IAnimalListItem> GetAnimalItems()
+        public List<string> GetAnimalItems()
         {
-            return Repository.Animals.Select(e => new AnimalItem(e));
+            return Repository.Animals.Select(e => e.AnimslType).ToList();
         }
 
         private string GetFilterString(IEnumerable<IWriter> writers)
@@ -85,6 +85,14 @@ namespace AnimalsModel
             }
 
             return sb.ToString();
+        }
+
+        public string GetAnimalClass(string animalType)
+        {
+            foreach (AbstractAnimal a in Repository.Animals)
+                if (a.AnimslType == animalType) return a.AnimalClassName;
+
+            return "";
         }
     }
 }

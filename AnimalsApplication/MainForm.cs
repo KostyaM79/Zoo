@@ -19,7 +19,7 @@ namespace AnimalsApplication
     public partial class MainForm : Form, IView
     {
         private readonly Presenter presenter;
-        private readonly List<IAnimalListItem> animalItems = new List<IAnimalListItem>();
+        private readonly List<string> animalItems = new List<string>();
 
         public event NeedToApplyFilterEventHandler NeedToApplyFilter;       //Событие вызывается при необходимости отфильтровать список
 
@@ -28,7 +28,7 @@ namespace AnimalsApplication
             InitializeComponent();
 
             SetUpListBox(animalsListBox, animalItems);                                  //Настраиваем ListBox1
-            SetUpListBox(filteredAnimalsListBox, new List<IAnimalListItem>());          //Настраиваем ListBox2
+            SetUpListBox(filteredAnimalsListBox, new List<string>());                   //Настраиваем ListBox2
             presenter = AnimalsApp.BuildSystem(this, new Repository(), new Library());  //Собираем систему
             NeedToApplyFilter += e => presenter.ApplyFilterToList(e.AnimalList, e.AnimalClassName);
         }
@@ -40,10 +40,10 @@ namespace AnimalsApplication
         /// <summary>
         /// Задаёт или возвращает коллекцию животных
         /// </summary>
-        public List<IAnimalListItem> Animals
+        public List<string> Animals
         {
-            get => animalsListBox.DataSource as List<IAnimalListItem>; //Возвращаем коллекцию животных
-            set => AddAnimalsToList(value);                     //Добавляем коллекцию животных в listBox
+            get => animalItems;                     //Возвращаем коллекцию животных
+            set => AddAnimalsToList(value);         //Добавляем коллекцию животных в listBox
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace AnimalsApplication
         /// </summary>
         public string AnimalType => typeTextBox.Text;
 
-        public IEnumerable<IAnimalListItem> AnimalListItems
+        public List<string> AnimalListItems
         {
             set => (filteredAnimalsListBox.DataSource as BindingSource).DataSource = value;
         }
@@ -120,11 +120,13 @@ namespace AnimalsApplication
         /// Добавляет животное в listBox
         /// </summary>
         /// <param name="item"></param>
-        public void AddAnimalToList(IAnimalListItem item)
+        public void AddAnimalToList(string item)
         {
             animalItems.Add(item);                                                  //Добавляем животное к коллекции
             (animalsListBox.DataSource as BindingSource).ResetBindings(false);      //Обновляем источник данных в listBox
         }
+
+        public void UpdateAnimalList() => (animalsListBox.DataSource as BindingSource).ResetBindings(false);
         #endregion
 
         //--------------------------------------------------------------------------------------------------------------
@@ -133,12 +135,12 @@ namespace AnimalsApplication
         /// Добавляет в listBox коллекцию животных
         /// </summary>
         /// <param name="items"></param>
-        private void AddAnimalsToList(IEnumerable<IAnimalListItem> items)
+        private void AddAnimalsToList(IEnumerable<string> items)
         {
-            animalItems.Clear();                                            //Очищаем источник данных listBox
-            animalsListBox.BeginUpdate();                                         //Предотвращаем перерисовку listBox
-            foreach (IAnimalListItem item in items) AddAnimalToList(item);  //Добавляем всех животных из переданной коллекции в listBox
-            animalsListBox.EndUpdate();                                           //Возобновляем перерисовку listBox
+            animalItems.Clear();                                   //Очищаем источник данных listBox
+            animalsListBox.BeginUpdate();                          //Предотвращаем перерисовку listBox
+            foreach (string item in items) AddAnimalToList(item);  //Добавляем всех животных из переданной коллекции в listBox
+            animalsListBox.EndUpdate();                            //Возобновляем перерисовку listBox
         }
 
         /// <summary>
@@ -147,7 +149,7 @@ namespace AnimalsApplication
         /// <param name="lb"></param>
         /// <param name="bs"></param>
         /// <param name="list"></param>
-        private void SetUpListBox(ListBox lb, List<IAnimalListItem> list)
+        private void SetUpListBox(ListBox lb, List<string> list)
         {
             BindingSource bs = new BindingSource();
             bs.DataSource = list;       //Устанавливаем переданную коллекцию животных в качестве источника данных в объекте привязки данных

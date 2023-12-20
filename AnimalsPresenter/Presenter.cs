@@ -37,7 +37,7 @@ namespace AnimalsPresenter
             set
             {
                 view = value;                                               //Сохраняем view в закрытое поле
-                view.Animals = LoadAnimals().ToList<IAnimalListItem>();     //Передаём в view загруженную коллекцию животных
+                view.Animals = LoadAnimals().ToList<string>();              //Передаём в view загруженную коллекцию животных
             }
         }
 
@@ -52,8 +52,9 @@ namespace AnimalsPresenter
             foreach (IFactoryListItem fac in factories)
                 if (fac.AnimalClassName == view.SelectedAnimalClass) concreteFactory = fac;
 
-            IAnimalListItem animal = model.CreateAnimal(concreteFactory, view.AnimalType);
-            view.AddAnimalToList(animal);
+            model.CreateAnimal(concreteFactory, view.AnimalType, view.Animals);
+
+            view.UpdateAnimalList();
         }
 
         /// <summary>
@@ -72,10 +73,10 @@ namespace AnimalsPresenter
         /// т.к. он не имеет доступа к классам животных
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<IAnimalListItem> LoadAnimals()
+        public List<string> LoadAnimals()
         {
             Model.LoadAnimals();                                                                        //Загружаем животных
-            IEnumerable<IAnimalListItem> items = model.GetAnimalItems();
+            List<string> items = model.GetAnimalItems();
             return items;                                                                               //Возвращаем коллекцию экземпляров AnimalItem
         }
 
@@ -100,11 +101,11 @@ namespace AnimalsPresenter
             return dataValidator.Validate(selectedItem, animalType);
         }
 
-        public void ApplyFilterToList(List<IAnimalListItem>list, string animalClassName)
+        public void ApplyFilterToList(List<string>list, string animalClassName)
         {
-            IEnumerable<IAnimalListItem> items = from item in list                                  //Отбираем животных выбранного пользователем класса
-                                                 where (item.AnimalClassName == animalClassName)    //
-                                                 select item;                                       //
+            List<string> items = (from item in list                                            //Отбираем животных выбранного пользователем класса
+                                                 where (animalClassName == model.GetAnimalClass(item))    //
+                                                 select item).ToList();                        //
 
             view.AnimalListItems = items.Count() > 0 ? items : null;
         }

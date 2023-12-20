@@ -13,7 +13,7 @@ namespace AnimalsLibrary
 
         public AbstractAnimal CreateAnimal(string animalType, IRepository repo)
         {
-            return null;
+            return new NullAnimal();
         }
     }
 }

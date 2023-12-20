@@ -20,5 +20,7 @@ namespace AnimalsView
         /// Возаращает вид животного
         /// </summary>
         string AnimalType { get; }
+
+        void AddYourselfToList(List<string> list);
     }
 }

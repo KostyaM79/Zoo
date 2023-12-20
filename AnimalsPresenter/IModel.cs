@@ -13,7 +13,7 @@ namespace AnimalsModel
     /// </summary>
     public interface IModel
     {
-        IAnimalListItem CreateAnimal(IFactoryListItem factory, string animalType);
+        void CreateAnimal(IFactoryListItem factory, string animalType, List<string>list);
 
         IEnumerable<IFactoryListItem> GetFactories();
 
@@ -23,6 +23,8 @@ namespace AnimalsModel
 
         void SaveRepository(RepositorySaver saver);
 
-        IEnumerable<IAnimalListItem> GetAnimalItems();
+        List<string> GetAnimalItems();
+
+        string GetAnimalClass(string animalType);
     }
 }

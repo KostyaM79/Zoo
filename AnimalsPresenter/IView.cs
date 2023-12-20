@@ -28,16 +28,18 @@ namespace AnimalsView
         /// <summary>
         /// Возвращает или задаёт источник данных для списка животных
         /// </summary>
-        List<IAnimalListItem> Animals { get; set; }
+        List<string> Animals { get; set; }
 
         /// <summary>
         /// Добавляет животное в список
         /// </summary>
         /// <param name="item"></param>
-        void AddAnimalToList(IAnimalListItem item);
+        void AddAnimalToList(string item);
 
-        IEnumerable<IAnimalListItem> AnimalListItems { set; }
+        List<string> AnimalListItems { set; }
 
         ISaveFileView SaveFileObj { get; }
+
+        void UpdateAnimalList();
     }
 }

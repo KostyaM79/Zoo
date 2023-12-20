@@ -42,12 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataValidator.cs" />
-    <Compile Include="IAnimalListItem.cs" />
     <Compile Include="IFactoryListItem.cs" />
     <Compile Include="IModel.cs" />
     <Compile Include="ISaveFileView.cs" />
     <Compile Include="IView.cs" />
-    <Compile Include="IWriterItemBase.cs" />
     <Compile Include="Presenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositorySaver.cs" />

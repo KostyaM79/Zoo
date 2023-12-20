@@ -50,7 +50,6 @@
     <Compile Include="IWriter.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WriterItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AnimalsPresenter\AnimalsPresenter.csproj">

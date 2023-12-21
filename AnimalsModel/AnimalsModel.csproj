@@ -44,12 +44,16 @@
     <Compile Include="AbstractAnimal.cs" />
     <Compile Include="FactoryItem.cs" />
     <Compile Include="IAnimalLibrary.cs" />
+    <Compile Include="IdChangedEventHandler.cs" />
     <Compile Include="IFactory.cs" />
+    <Compile Include="IIdSerialize.cs" />
     <Compile Include="IReader.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IWriter.cs" />
+    <Compile Include="LastId.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShowMessageCallBack.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AnimalsPresenter\AnimalsPresenter.csproj">

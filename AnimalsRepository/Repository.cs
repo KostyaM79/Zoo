@@ -16,6 +16,14 @@ namespace AnimalsRepository
         private readonly List<AbstractAnimal> animals = new List<AbstractAnimal>();     //Коллекция животных
         private readonly IWriter saver = new XmlWriter();                               //Экземпляр писателя
         private readonly IReader loader = new XmlReader();                              //Экземпляр загрузчика
+        private readonly LastId lastId;
+
+        public Repository()
+        {
+            LastIdSerializer lastIdSerializer = new LastIdSerializer();
+            lastId = new LastId(new LastIdSerializer());                            //Загружаем значение lastId, если оно сохранено, иначе будет создан новый lastId
+            lastId.IdChanged += () => lastId.Serialize(new LastIdSerializer());     //При каждом изменении счётчика, lastId будет сохранён
+        }
 
         /// <summary>
         /// Возвращает коллекцию животных
@@ -26,7 +34,16 @@ namespace AnimalsRepository
         /// Добавляет животное в коллекцию
         /// </summary>
         /// <param name="animal"></param>
-        public void Add(AbstractAnimal animal) => animals.Add(animal);
+        public void AddAndGenerateId(AbstractAnimal animal)
+        {
+            animal.SetId(lastId);       //Добавляем Id
+            animals.Add(animal);        //Добавляем животное в репозиторий
+        }
+
+        public void Add(AbstractAnimal animal)
+        {
+            animals.Add(animal);        //Добавляем животное в репозиторий
+        }
 
         /// <summary>
         /// Сохраняет коллекцию животных.
@@ -56,6 +73,11 @@ namespace AnimalsRepository
                 writers.Add(t.GetConstructor(new Type[] { }).Invoke(new object[] { }) as IWriter);
             }
             return writers;
+        }
+
+        public AbstractAnimal GetAnimal(string animalType)
+        {
+            return animals.First(e => e.Type == animalType);
         }
 
     }

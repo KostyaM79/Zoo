@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JsonWriter.cs" />
+    <Compile Include="LastIdSerializer.cs" />
     <Compile Include="TextWriter.cs" />
     <Compile Include="XmlReader.cs" />
     <Compile Include="Repository.cs" />

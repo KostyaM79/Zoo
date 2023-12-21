@@ -3,28 +3,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AnimalsView;
+using AnimalsPresenter;
 
 namespace AnimalsModel
 {
     /// <summary>
     /// Базовый класс для животных
     /// </summary>
-    public abstract class AbstractAnimal
+    public abstract class AbstractAnimal : IAnimal
     {
+        public AbstractAnimal(string name) => Name = name;
+
+        public AbstractAnimal(int id, string animalType, string name)
+        {
+            Id = id;
+            Type = animalType;
+            Name = name;
+        }
+
+        public int Id { get; private set; }
+
+        public string Name { get; private set; }
+
         /// <summary>
         /// Возвращает класс животного
         /// </summary>
-        public abstract string AnimalClassName { get; }
+        public abstract string Class { get; }
+
+        public abstract string ClassDefinition { get; }
 
         /// <summary>
         /// Возвращает вид животного
         /// </summary>
-        public string AnimslType { get; protected set; }
+        public string Type { get; private set; }
 
-        public virtual void AddYourselfToList(List<string> list)
+        /// <summary>
+        /// Добавляет данный экземпляр к коллекции
+        /// </summary>
+        /// <param name="list"></param>
+        public virtual void AddYourselfToList(List<string> list, ShowMessageCallBack callBack)
         {
-            list.Add(AnimslType);
+            list.Add(Type);
         }
+
+        public void SetId(LastId lastId) => Id = lastId.Id;
+
+        public override string ToString() => $"{Class}: {Type}, {Name}";
     }
 }

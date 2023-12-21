@@ -20,7 +20,7 @@ namespace AnimalsRepository
             List<string> strings = new List<string>();
             foreach (AbstractAnimal animal in animals)
             {
-                strings.Add($"Класс: {animal.AnimalClassName} | Вид: {animal.AnimslType}");
+                strings.Add($"Id: {animal.Id} | Класс: {animal.Class} | Вид: {animal.Type} | Имя: {animal.Name}");
             }
 
             File.WriteAllLines(fileName, strings);

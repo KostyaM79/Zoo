@@ -224,6 +224,7 @@ AppPackages/
 # Файлы добавленные мною
 cmd.exe.lnk
 pwsh.exe.lnk
+lastId
 
 #####
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)

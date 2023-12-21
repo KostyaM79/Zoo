@@ -23,29 +23,37 @@ namespace AnimalsRepository
         /// <param name="animals"></param>
         public void Write(List<AbstractAnimal> animals, string fileName)
         {
-            XmlDocument doc = new XmlDocument();                //Создаём XML-документ
-            doc.AppendChild(doc.CreateElement("Animals"));      //Добавляем корневой элемент Animals
+            XmlDocument doc = new XmlDocument();                                //Создаём XML-документ
+            doc.AppendChild(doc.CreateElement("Animals"));                      //Добавляем корневой элемент Animals
 
             //В цикле перебираем животных
             foreach (AbstractAnimal a in animals)
             {
-                XmlElement element = GetNode(doc.DocumentElement, a.AnimalClassName);   //Ищем узел, соответствующий классу животного
+                XmlElement element = GetNode(doc.DocumentElement, a.Class);     //Ищем узел, соответствующий классу животного
 
                 //Если узел не найден, создаём новый и добавляем его в XML-документ
                 if (element == null)
                 {
-                    element = doc.CreateElement(a.AnimalClassName);     //Если узел не найден, создаём новый
-                    doc.DocumentElement.AppendChild(element);           //Добавляем созданный узел в XML-документ
+                    element = doc.CreateElement(a.Class);                       //Если узел не найден, создаём новый
+                    doc.DocumentElement.AppendChild(element);                   //Добавляем созданный узел в XML-документ
                 }
 
                 XmlElement animalElement = doc.CreateElement("Animal");         //Создаём узел Animal
+                XmlAttribute idAttr = doc.CreateAttribute("Id");                //Создаём атрибут Id
+                XmlAttribute nameAttr = doc.CreateAttribute("Name");            //Создаём атрибут Name
                 XmlAttribute typeAttr = doc.CreateAttribute("AnimalType");      //Создаём атрибут AnimalType
-                typeAttr.Value = a.AnimslType;                                  //Присваиваем атрибуту значение
-                animalElement.Attributes.Append(typeAttr);                      //Добавляем атрибут к узлу Animal
+
+                idAttr.Value = a.Id.ToString();                                 //Присваиваем атрибуту Id значение
+                nameAttr.Value = a.Name;                                        //Присваиваем атрибуту Name значение
+                typeAttr.Value = a.Type;                                        //Присваиваем атрибуту AnimalType значение
+
+                animalElement.Attributes.Append(idAttr);                        //Добавляем атрибут Id к узлу Animal
+                animalElement.Attributes.Append(nameAttr);                      //Добавляем атрибут Name к узлу Animal
+                animalElement.Attributes.Append(typeAttr);                      //Добавляем атрибут AnimalClass к узлу Animal
                 element.AppendChild(animalElement);                             //Добавляем узел Animal в XML-документ
             }
 
-            doc.Save(fileName);                                 //Сохраняем XML-документ
+            doc.Save(fileName);                                                 //Сохраняем XML-документ
         }
 
         /// <summary>

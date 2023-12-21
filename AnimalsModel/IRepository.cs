@@ -12,6 +12,8 @@ namespace AnimalsModel
     /// </summary>
     public interface IRepository
     {
+        void AddAndGenerateId(AbstractAnimal animal);
+
         void Add(AbstractAnimal animal);
 
         List<AbstractAnimal> Animals { get; }
@@ -21,5 +23,7 @@ namespace AnimalsModel
         void Load(Model model);
 
         IEnumerable<IWriter> GetWriters();
+
+        AbstractAnimal GetAnimal(string animalType);
     }
 }

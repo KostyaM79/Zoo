@@ -12,8 +12,10 @@ namespace AnimalsLibrary
     /// </summary>
     public class Mammal : AbstractAnimal
     {
-        public Mammal(string animalType) => AnimslType = animalType;
+        public Mammal(int id, string animalType, string name) : base(id, animalType, name) { }
 
-        public override string AnimalClassName => "Млекопитающие";
+        public override string Class => "Млекопитающие";
+
+        public override string ClassDefinition => AnimalDefinitions.ResourceManager.GetString("MammalDef");
     }
 }

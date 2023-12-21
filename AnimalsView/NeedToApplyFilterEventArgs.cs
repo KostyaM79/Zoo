@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnimalsPresenter;
 
 namespace AnimalsView
 {
@@ -11,7 +12,7 @@ namespace AnimalsView
     /// </summary>
     public class NeedToApplyFilterEventArgs : EventArgs
     {
-        public NeedToApplyFilterEventArgs(string animalClassName, List<string> items)
+        public NeedToApplyFilterEventArgs(string animalClassName, List<IAnimal> items)
         {
             AnimalClassName = animalClassName;
             AnimalList = items;
@@ -20,7 +21,7 @@ namespace AnimalsView
         /// <summary>
         /// Возвращает коллекцию животных
         /// </summary>
-        public List<string> AnimalList { get; private set; }
+        public List<IAnimal> AnimalList { get; private set; }
 
         /// <summary>
         /// Возвращает название класса животного

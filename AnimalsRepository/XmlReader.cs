@@ -21,7 +21,7 @@ namespace AnimalsRepository
         /// <param name="model"></param>
         public void Read(IRepository animals, Model model, string fileName)
         {
-            animals.Animals.Clear();                                                                        //Очищаем коллекцию
+            animals.Animals.Clear();                                                                //Очищаем коллекцию
             XmlDocument doc = new XmlDocument();                                                    //Создаём Xml-документ
 
             //Если файл существует, загружаем из него данные
@@ -52,15 +52,20 @@ namespace AnimalsRepository
         /// <summary>
         /// Создаёт животных определённого класса
         /// </summary>
-        /// <param name="animals"></param>
+        /// <param name="repo"></param>
         /// <param name="el"></param>
         /// <param name="factory"></param>
-        private void CreateAnimalsOfClass(IRepository animals, XmlElement el, IFactory factory)
+        private void CreateAnimalsOfClass(IRepository repo, XmlElement el, IFactory factory)
         {
             //В цикле перебираем всех животных данного класса
             foreach (XmlElement e in el.ChildNodes)
             {
-                factory.CreateAnimal(e.Attributes["AnimalType"].Value, animals);      //По каждой записи создаём экземпляр животного
+                //По каждой записи создаём экземпляр животного
+                factory.CreateAnimal(
+                    int.Parse(e.Attributes["Id"].Value),
+                    e.Attributes["Name"].Value,
+                    e.Attributes["AnimalType"].Value,
+                    repo);
             }
         }
     }

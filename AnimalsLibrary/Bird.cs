@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Resources;
 using AnimalsModel;
 
 namespace AnimalsLibrary
@@ -12,8 +13,10 @@ namespace AnimalsLibrary
     /// </summary>
     public class Bird : AbstractAnimal
     {
-        public Bird(string animalType) => AnimslType = animalType;
+        public Bird(int id, string animalType, string name) : base(id, animalType, name) { }
 
-        public override string AnimalClassName => "Птицы";
+        public override string Class => "Птицы";
+
+        public override string ClassDefinition => AnimalDefinitions.ResourceManager.GetString("BirdDef");
     }
 }

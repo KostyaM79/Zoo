@@ -51,12 +51,23 @@
     <Compile Include="NullAnimal.cs" />
     <Compile Include="NullFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AnimalDefinitions.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AnimalDefinitions.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AnimalsModel\AnimalsModel.csproj">
       <Project>{2a29b138-e391-48a0-92c5-71e7d08934c0}</Project>
       <Name>AnimalsModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AnimalDefinitions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AnimalDefinitions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

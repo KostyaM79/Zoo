@@ -9,8 +9,19 @@ namespace AnimalsLibrary
 {
     public class NullAnimal : AbstractAnimal
     {
-        public override string AnimalClassName => "Несуществующий класс";
+        public NullAnimal() : base("Нет имени") { }
 
-        public override void AddYourselfToList(List<string> list) { }
+        /// <summary>
+        /// Возвращает класс животного
+        /// </summary>
+        public override string Class => "Несуществующий класс";
+
+        public override string ClassDefinition => "Определение отсутствует";
+
+        /// <summary>
+        /// Вызывает метод обратного вызова, дла обработки нулевого объекта
+        /// </summary>
+        /// <param name="list"></param>
+        public override void AddYourselfToList(List<string> list, ShowMessageCallBack callBack) => callBack();
     }
 }

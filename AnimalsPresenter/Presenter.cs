@@ -37,35 +37,18 @@ namespace AnimalsPresenter
             set
             {
                 view = value;                                               //Сохраняем view в закрытое поле
-                view.Animals = LoadAnimals().ToList<string>();              //Передаём в view загруженную коллекцию животных
+                view.Animals = LoadAnimals();                               //Передаём в view загруженную коллекцию животных
             }
         }
 
         /// <summary>
         /// Добавляет новое животное
         /// </summary>
-        public void AddNewAnimal()
+        public void CreateNewAnimal(IView v)
         {
-            IEnumerable<IFactoryListItem> factories = model.GetFactories();
-            IFactoryListItem concreteFactory = model.GetNullFactory();
-            
-            foreach (IFactoryListItem fac in factories)
-                if (fac.AnimalClassName == view.SelectedAnimalClass) concreteFactory = fac;
-
-            model.CreateAnimal(concreteFactory, view.AnimalType, view.Animals);
-
-            view.UpdateAnimalList();
-        }
-
-        /// <summary>
-        /// Возвращает коллекцию фабрик, обёрнутых в FactoryItem, чтобы её можно было использовать в пользовательском интерфейсе,
-        /// т.к. он не имеет доступа к классам фабрик
-        /// </summary>
-        /// <returns></returns>
-        private IEnumerable<IFactoryListItem> GetListItems()
-        {
-            IEnumerable<IFactoryListItem> factories = Model.GetFactories();                         //Получаем коллекцию фабрик из Model
-            return factories;                                                                   //Возвращаем коллекцию экземпляров FactoryItem
+            IFactoryListItem concreteFactory = model.GetFactory(v.SelectedAnimalClass);
+            IAnimal animal = model.CreateAnimal(concreteFactory, v.AnimalType, v.AnimalName, v.Animals, this);  //Создаём новое животное, используя фабрику
+            v.AddAnimalToList(animal);
         }
 
         /// <summary>
@@ -73,10 +56,10 @@ namespace AnimalsPresenter
         /// т.к. он не имеет доступа к классам животных
         /// </summary>
         /// <returns></returns>
-        public List<string> LoadAnimals()
+        public List<IAnimal> LoadAnimals()
         {
             Model.LoadAnimals();                                                                        //Загружаем животных
-            List<string> items = model.GetAnimalItems();
+            List<IAnimal> items = model.GetAnimalItems();
             return items;                                                                               //Возвращаем коллекцию экземпляров AnimalItem
         }
 
@@ -96,18 +79,32 @@ namespace AnimalsPresenter
         /// <param name="selectedItem"></param>
         /// <param name="animalType"></param>
         /// <returns></returns>
-        public bool ValidateData(object selectedItem, string animalType)
+        public bool ValidateData(object selectedItem, string animalType, string name)
         {
-            return dataValidator.Validate(selectedItem, animalType);
+            return dataValidator.Validate(selectedItem, animalType, name);
         }
 
-        public void ApplyFilterToList(List<string>list, string animalClassName)
+        /// <summary>
+        /// Применяет фильтр к списку
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="animalClassName"></param>
+        public void ApplyFilterToList(List<IAnimal>list, string animalClassName)
         {
-            List<string> items = (from item in list                                            //Отбираем животных выбранного пользователем класса
-                                                 where (animalClassName == model.GetAnimalClass(item))    //
-                                                 select item).ToList();                        //
+            List<IAnimal> items = (from item in list                                            //Отбираем животных выбранного пользователем класса
+                           where (animalClassName == item.Class) select item).ToList();         //
 
             view.AnimalListItems = items.Count() > 0 ? items : null;
+        }
+
+        /// <summary>
+        /// Вызывает сообщение о невозмоности добавить животное
+        /// </summary>
+        public void ShowNotAddedMessage() => view.ShowMessage("Животное не было добавлено, так как работа с выбранным классом животных ещё не реализована!");
+
+        public void GetClassDefinition(IView view)
+        {
+            view.ClassDefinition = view.SelectedAnimal.ClassDefinition;
         }
     }
 }

@@ -13,6 +13,10 @@ namespace AnimalsPresenter
 
         public RepositorySaver(ISaveFileView saveFileViewObject) => this.saveFileViewObject = saveFileViewObject;
 
+        /// <summary>
+        /// Получает от пользователя данные для сохранения репозитория
+        /// </summary>
+        /// <param name="filterStr"></param>
         public void GetDataForSave(string filterStr)
         {
             saveFileViewObject.GetData(filterStr);
@@ -20,7 +24,14 @@ namespace AnimalsPresenter
             FilePath = saveFileViewObject.FilePath;
         }
 
+        /// <summary>
+        /// Возвращает индекс формата файла, полученный от пользователя
+        /// </summary>
         public int FilterIndex { get; private set; }
+
+        /// <summary>
+        /// Возвращает путь для сохранения
+        /// </summary>
         public string FilePath { get; private set; }
     }
 }

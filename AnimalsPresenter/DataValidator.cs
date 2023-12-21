@@ -17,9 +17,9 @@ namespace AnimalsPresenter
         /// <param name="selectedItem"></param>
         /// <param name="animalType"></param>
         /// <returns></returns>
-        public bool Validate(object selectedItem, string animalType)
+        public bool Validate(object selectedItem, string animalType, string name)
         {
-            return selectedItem != null && animalType != string.Empty;
+            return selectedItem != null && !string.IsNullOrEmpty(animalType) && !string.IsNullOrEmpty(name);
         }
     }
 }

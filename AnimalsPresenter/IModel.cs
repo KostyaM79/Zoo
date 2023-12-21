@@ -13,18 +13,22 @@ namespace AnimalsModel
     /// </summary>
     public interface IModel
     {
-        void CreateAnimal(IFactoryListItem factory, string animalType, List<string>list);
+        IAnimal CreateAnimal(IFactoryListItem factory, string animalType, string name, List<IAnimal>list, Presenter presenter);
 
         IEnumerable<IFactoryListItem> GetFactories();
 
         IFactoryListItem GetNullFactory();
 
+        IFactoryListItem GetFactory(string animalClass);
+
         void LoadAnimals();
 
         void SaveRepository(RepositorySaver saver);
 
-        List<string> GetAnimalItems();
+        List<IAnimal> GetAnimalItems();
 
         string GetAnimalClass(string animalType);
+
+        string GetAnimalClassDefinition(string animalType);
     }
 }

@@ -36,10 +36,9 @@ namespace AnimalsModel
         /// <param name="factoryItem"></param>
         /// <param name="animalType"></param>
         /// <returns></returns>
-        public void CreateAnimal(IFactoryListItem factoryItem, string animalType, List<string> list)
+        public IAnimal CreateAnimal(IFactoryListItem factoryItem, string animalType, string name, List<IAnimal> list, Presenter presenter)
         {
-            AbstractAnimal animal = (factoryItem as FactoryItem).Factory.CreateAnimal(animalType, Repository);
-            animal.AddYourselfToList(list);
+            return (factoryItem as FactoryItem).Factory.CreateAnimal(animalType, name, Repository);
         }
 
         /// <summary>
@@ -48,7 +47,20 @@ namespace AnimalsModel
         /// <returns></returns>
         public IEnumerable<IFactoryListItem> GetFactories() => AnimalLibrary.GetFactoryCollection().Select(e => new FactoryItem(e));
 
+        /// <summary>
+        /// Возвращает нулевую фабрику
+        /// </summary>
+        /// <returns></returns>
         public IFactoryListItem GetNullFactory() => new FactoryItem(AnimalLibrary.GetNullFactory());
+
+        public IFactoryListItem GetFactory(string animalClass)
+        {
+            IFactory factory = AnimalLibrary.GetNullFactory();
+            IEnumerable<IFactory> factories = AnimalLibrary.GetFactoryCollection();
+            foreach (IFactory f in factories)
+                if (f.AnimalClassName == animalClass) factory = f;
+            return new FactoryItem(factory);
+        }
 
         /// <summary>
         /// Загружает всех животных в репозиторий
@@ -68,11 +80,21 @@ namespace AnimalsModel
             writers.ElementAt(saver.FilterIndex - 1).Write(Repository.Animals, saver.FilePath);
         }
 
-        public List<string> GetAnimalItems()
+        /// <summary>
+        /// Возвращает список животных, созданный на основе репозитория
+        /// </summary>
+        /// <returns></returns>
+        public List<IAnimal> GetAnimalItems()
         {
-            return Repository.Animals.Select(e => e.AnimslType).ToList();
+            //return Repository.Animals.Select(e => e.Type).ToList();
+            return Repository.Animals.Select(e => e as IAnimal).ToList();
         }
 
+        /// <summary>
+        /// Создаёт и возвращает строку фильтра для диалога сохранения файла
+        /// </summary>
+        /// <param name="writers"></param>
+        /// <returns></returns>
         private string GetFilterString(IEnumerable<IWriter> writers)
         {
             StringBuilder sb = new StringBuilder();
@@ -87,12 +109,22 @@ namespace AnimalsModel
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Определяет класс животного по его виду
+        /// </summary>
+        /// <param name="animalType"></param>
+        /// <returns></returns>
         public string GetAnimalClass(string animalType)
         {
             foreach (AbstractAnimal a in Repository.Animals)
-                if (a.AnimslType == animalType) return a.AnimalClassName;
+                if (a.Type == animalType) return a.Class;
 
             return "";
+        }
+
+        public string GetAnimalClassDefinition(string animalType)
+        {
+            return Repository.GetAnimal(animalType).ClassDefinition;
         }
     }
 }

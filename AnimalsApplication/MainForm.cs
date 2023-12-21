@@ -20,6 +20,8 @@ namespace AnimalsApplication
     {
         private readonly Presenter presenter;
         private readonly List<string> animalItems = new List<string>();
+        private readonly List<IAnimal> animalListItems = new List<IAnimal>();
+        private IAnimal selectedAnimal;
 
         public event NeedToApplyFilterEventHandler NeedToApplyFilter;       //Событие вызывается при необходимости отфильтровать список
 
@@ -27,8 +29,10 @@ namespace AnimalsApplication
         {
             InitializeComponent();
 
-            SetUpListBox(animalsListBox, animalItems);                                  //Настраиваем ListBox1
-            SetUpListBox(filteredAnimalsListBox, new List<string>());                   //Настраиваем ListBox2
+            //SetUpListBox(animalsListBox, animalItems);                                  //Настраиваем ListBox1
+            SetUpListBox(animalsListBox, animalListItems);                                  //Настраиваем ListBox1
+
+            SetUpListBox(filteredListBox, new List<string>());                   //Настраиваем ListBox2
             presenter = AnimalsApp.BuildSystem(this, new Repository(), new Library());  //Собираем систему
             NeedToApplyFilter += e => presenter.ApplyFilterToList(e.AnimalList, e.AnimalClassName);
         }
@@ -40,9 +44,9 @@ namespace AnimalsApplication
         /// <summary>
         /// Задаёт или возвращает коллекцию животных
         /// </summary>
-        public List<string> Animals
+        public List<IAnimal> Animals
         {
-            get => animalItems;                     //Возвращаем коллекцию животных
+            get => animalListItems;                     //Возвращаем коллекцию животных
             set => AddAnimalsToList(value);         //Добавляем коллекцию животных в listBox
         }
 
@@ -51,9 +55,9 @@ namespace AnimalsApplication
         /// </summary>
         public string AnimalType => typeTextBox.Text;
 
-        public List<string> AnimalListItems
+        public List<IAnimal> AnimalListItems
         {
-            set => (filteredAnimalsListBox.DataSource as BindingSource).DataSource = value;
+            set => (filteredListBox.DataSource as BindingSource).DataSource = value;
         }
 
         public ISaveFileView SaveFileObj => new SaveFileDataObject();
@@ -70,7 +74,7 @@ namespace AnimalsApplication
         {
             //Инициируем фильтрацию
             if (classesComboBox.SelectedItem != null)
-                NeedToApplyFilter(new NeedToApplyFilterEventArgs(classesComboBox.SelectedItem.ToString(), animalItems));
+                NeedToApplyFilter(new NeedToApplyFilterEventArgs(classesComboBox.SelectedItem.ToString(), animalListItems));
         }
 
         /// <summary>
@@ -78,7 +82,7 @@ namespace AnimalsApplication
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AddButton_Click(object sender, EventArgs e) => AddNewAnimal();
+        private void AddButton_Click(object sender, EventArgs e) => CreateNewAnimal();
 
 
         /// <summary>
@@ -90,7 +94,7 @@ namespace AnimalsApplication
         {
             //При выборе пользователем какого-либо класса животного,
             //сообщаем об этом в Presenter, чтобы тот передал отфильтрованные данные в listBox2
-            NeedToApplyFilter(new NeedToApplyFilterEventArgs(classesComboBox.SelectedItem.ToString(), animalItems));
+            NeedToApplyFilter(new NeedToApplyFilterEventArgs(classesComboBox.SelectedItem.ToString(), animalListItems));
         }
 
         /// <summary>
@@ -126,7 +130,15 @@ namespace AnimalsApplication
             (animalsListBox.DataSource as BindingSource).ResetBindings(false);      //Обновляем источник данных в listBox
         }
 
+        public void AddAnimalToList(IAnimal animal)
+        {
+            animalListItems.Add(animal);                                            //Добавляем животное к коллекции
+            (animalsListBox.DataSource as BindingSource).ResetBindings(false);      //Обновляем источник данных в listBox
+        }
+
         public void UpdateAnimalList() => (animalsListBox.DataSource as BindingSource).ResetBindings(false);
+
+        public void ShowMessage(string message) => MessageBox.Show(message);
         #endregion
 
         //--------------------------------------------------------------------------------------------------------------
@@ -135,12 +147,12 @@ namespace AnimalsApplication
         /// Добавляет в listBox коллекцию животных
         /// </summary>
         /// <param name="items"></param>
-        private void AddAnimalsToList(IEnumerable<string> items)
+        private void AddAnimalsToList(IEnumerable<IAnimal> items)
         {
-            animalItems.Clear();                                   //Очищаем источник данных listBox
-            animalsListBox.BeginUpdate();                          //Предотвращаем перерисовку listBox
-            foreach (string item in items) AddAnimalToList(item);  //Добавляем всех животных из переданной коллекции в listBox
-            animalsListBox.EndUpdate();                            //Возобновляем перерисовку listBox
+            animalListItems.Clear();                                    //Очищаем источник данных listBox
+            animalsListBox.BeginUpdate();                           //Предотвращаем перерисовку listBox
+            foreach (IAnimal item in items) AddAnimalToList(item);  //Добавляем всех животных из переданной коллекции в listBox
+            animalsListBox.EndUpdate();                             //Возобновляем перерисовку listBox
         }
 
         /// <summary>
@@ -156,20 +168,27 @@ namespace AnimalsApplication
             lb.DataSource = bs;         //Добавляем объект привязки данных в lixtBox
         }
 
+        private void SetUpListBox(ListBox lb, List<IAnimal> list)
+        {
+            BindingSource bs = new BindingSource();
+            bs.DataSource = list;       //Устанавливаем переданную коллекцию животных в качестве источника данных в объекте привязки данных
+            lb.DataSource = bs;         //Добавляем объект привязки данных в lixtBox
+        }
+
         /// <summary>
         /// Добавляет новое животное
         /// </summary>
-        private void AddNewAnimal()
+        private void CreateNewAnimal()
         {
             //Если все необходимые данные введены пользователем, добавляем новое животное
-            if (presenter.ValidateData(classesComboBox.SelectedItem, typeTextBox.Text))
+            if (presenter.ValidateData(classesComboBox.SelectedItem, typeTextBox.Text, nameTextBox.Text))
             {
-                presenter.AddNewAnimal();                       //Добавляем новое животное на основе введённых данных
+                presenter.CreateNewAnimal(this);                //Добавляем новое животное на основе введённых данных
 
                 NeedToApplyFilter(                              //Вызываем событие инициирующее фильтрацию второго списка животных
                     new NeedToApplyFilterEventArgs(             //
                         SelectedAnimalClass,                    //
-                        animalItems));                          //
+                        animalListItems));                      //
 
                 typeTextBox.Clear();                            //Очищаем поле ввода вида животного
             }
@@ -178,5 +197,24 @@ namespace AnimalsApplication
             else MessageBox.Show("Не все обязательные поля заполнены!", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
         #endregion
+
+        private void animalsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (animalsListBox != null && presenter != null)
+            {
+                selectedAnimal = animalsListBox.SelectedItem as IAnimal;
+                presenter.GetClassDefinition(this);
+            }
+        }
+
+        public string ClassDefinition
+        {
+            get => label3.Text;
+            set => label3.Text = value;
+        }
+
+        public IAnimal SelectedAnimal => selectedAnimal;
+
+        public string AnimalName => nameTextBox.Text;
     }
 }

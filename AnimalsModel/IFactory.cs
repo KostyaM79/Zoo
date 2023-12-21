@@ -11,7 +11,9 @@ namespace AnimalsModel
     /// </summary>
     public interface IFactory
     {
-        AbstractAnimal CreateAnimal(string animalType, IRepository repo);
+        AbstractAnimal CreateAnimal(string animalType, string name, IRepository repo);
+
+        AbstractAnimal CreateAnimal(int id, string name, string animalType, IRepository repo);
 
         string AnimalClassName { get; }
     }

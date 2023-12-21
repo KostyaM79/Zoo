@@ -12,8 +12,10 @@ namespace AnimalsLibrary
     /// </summary>
     public class Fish : AbstractAnimal
     {
-        public override string AnimalClassName => "Рыбы";
+        public override string Class => "Рыбы";
 
-        public Fish(string animalType) => AnimslType = animalType;
+        public override string ClassDefinition => AnimalDefinitions.ResourceManager.GetString("FishDef");
+
+        public Fish(int id, string animalType, string name) : base(id, animalType, name) { }
     }
 }

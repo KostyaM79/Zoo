@@ -69,7 +69,7 @@ namespace AnimalsRepository
             {
                 if (element.Name == nodeName) return element;   //Если узел найден, возвращаем его
             }
-            return null;    //Если цикл закончился, а искомый узел не найден, возвращаем null
+            return null;                                        //Если цикл закончился, а искомый узел не найден, возвращаем null
         }
     }
 }

@@ -46,10 +46,7 @@ namespace AnimalsPresenter
         /// </summary>
         public void CreateNewAnimal()
         {
-            IFactoryListItem concreteFactory = model.GetFactory(view.SelectedAnimalClass);
-            //IAnimal animal = model.CreateAnimal(concreteFactory, view.AnimalType, view.AnimalName, view.Animals, this);  //Создаём новое животное, используя фабрику
-            model.CreateAnimal(concreteFactory, view.AnimalType, view.AnimalName, view, this);
-            //animal.AddYourselfToList(view.Animals);
+            model.CreateAnimal(view.SelectedAnimalClass, view.AnimalType, view.AnimalName, view, this);          //Создаём новое животное, используя фабрику
             view.UpdateAnimalList();
         }
 
@@ -99,14 +96,15 @@ namespace AnimalsPresenter
             view.AnimalListItems = items.Count() > 0 ? items : null;
         }
 
-        /// <summary>
-        /// Вызывает сообщение о невозмоности добавить животное
-        /// </summary>
-        public void ShowNotAddedMessage() => view.ShowMessage("Животное не было добавлено, так как работа с выбранным классом животных ещё не реализована!");
-
         public void GetClassDefinition(IView view)
         {
             view.ClassDefinition = view.SelectedAnimal.ClassDefinition;
+        }
+
+        public void DeleteAnimal()
+        {
+            view.DeleteAnimalFromList(view.SelectedAnimal);
+            model.DeleteAnimal(view.SelectedAnimal);
         }
     }
 }

@@ -13,6 +13,6 @@ namespace AnimalsLibrary
 
         public override string Class => "Пресмыкающиеся";
 
-        public override string ClassDefinition => AnimalDefinitions.ResourceManager.GetString("ReptilDef");
+        public override string ClassDefinition => AnimalDefinitions.ResourceManager.GetString("ReptileDef");
     }
 }

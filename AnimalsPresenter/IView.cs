@@ -31,12 +31,6 @@ namespace AnimalsView
         /// </summary>
         List<IAnimal> Animals { get; set; }
 
-        /// <summary>
-        /// Добавляет животное в список
-        /// </summary>
-        /// <param name="item"></param>
-        void AddAnimalToList(string item);
-
         void AddAnimalToList(IAnimal animal);
 
         /// <summary>
@@ -65,5 +59,7 @@ namespace AnimalsView
         IAnimal SelectedAnimal { get; }
 
         string AnimalName { get; }
+
+        void DeleteAnimalFromList(IAnimal animal);
     }
 }

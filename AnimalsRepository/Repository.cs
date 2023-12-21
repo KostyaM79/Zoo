@@ -45,6 +45,12 @@ namespace AnimalsRepository
             animals.Add(animal);        //Добавляем животное в репозиторий
         }
 
+        public void Delete(AbstractAnimal animal)
+        {
+            animals.Remove(animal);
+            Save();
+        }
+
         /// <summary>
         /// Сохраняет коллекцию животных.
         /// Источник данных определяется конкретным писателем.
@@ -74,11 +80,5 @@ namespace AnimalsRepository
             }
             return writers;
         }
-
-        public AbstractAnimal GetAnimal(string animalType)
-        {
-            return animals.First(e => e.Type == animalType);
-        }
-
     }
 }

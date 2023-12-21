@@ -14,6 +14,5 @@ namespace AnimalsPresenter
         string Class { get; }
         string Type { get; }
         string ClassDefinition { get; }
-        //void AddYourselfToList(List<IAnimal> list);
     }
 }

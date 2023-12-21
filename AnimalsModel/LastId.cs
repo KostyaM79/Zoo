@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace AnimalsModel
 {
-    [Serializable]
     public class LastId
     {
         public event IdChangedEventHandler IdChanged;

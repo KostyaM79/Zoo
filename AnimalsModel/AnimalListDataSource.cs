@@ -13,10 +13,7 @@ namespace AnimalsModel
     /// </summary>
     public class AnimalListDataSource
     {
-        private List<IAnimal> animalList;
         private IView view;
-
-        public AnimalListDataSource(List<IAnimal> list) => animalList = list;
 
         public AnimalListDataSource(IView view) => this.view = view;
 

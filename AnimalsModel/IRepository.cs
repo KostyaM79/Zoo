@@ -16,6 +16,8 @@ namespace AnimalsModel
 
         void Add(AbstractAnimal animal);
 
+        void Delete(AbstractAnimal animal);
+
         List<AbstractAnimal> Animals { get; }
 
         void Save();
@@ -23,7 +25,5 @@ namespace AnimalsModel
         void Load(Model model);
 
         IEnumerable<IWriter> GetWriters();
-
-        AbstractAnimal GetAnimal(string animalType);
     }
 }

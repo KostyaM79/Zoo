@@ -47,6 +47,7 @@ namespace AnimalsApplication
             this.acceptButton = new System.Windows.Forms.Button();
             this.filteredListBox = new System.Windows.Forms.ListBox();
             this.animalsListBox = new System.Windows.Forms.ListBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -221,14 +222,16 @@ namespace AnimalsApplication
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.ColumnCount = 3;
+            this.tableLayoutPanel3.ColumnCount = 4;
             this.tableLayoutPanel1.SetColumnSpan(this.tableLayoutPanel3, 2);
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 499F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 95F));
             this.tableLayoutPanel3.Controls.Add(this.cancelButton, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.saveButton, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.acceptButton, 2, 0);
+            this.tableLayoutPanel3.Controls.Add(this.acceptButton, 3, 0);
+            this.tableLayoutPanel3.Controls.Add(this.button1, 2, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 520);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -248,6 +251,7 @@ namespace AnimalsApplication
             this.cancelButton.TabIndex = 0;
             this.cancelButton.Text = "Закрыть";
             this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // saveButton
             // 
@@ -295,6 +299,18 @@ namespace AnimalsApplication
             this.animalsListBox.TabIndex = 2;
             this.animalsListBox.SelectedIndexChanged += new System.EventHandler(this.animalsListBox_SelectedIndexChanged);
             // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(614, 11);
+            this.button1.Margin = new System.Windows.Forms.Padding(10);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Удалить";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.DeleteButton_Click);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.acceptButton;
@@ -337,6 +353,7 @@ namespace AnimalsApplication
         private System.Windows.Forms.ListBox filteredListBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox nameTextBox;
+        private System.Windows.Forms.Button button1;
     }
 }
 

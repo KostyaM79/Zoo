@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="DataValidator.cs" />
     <Compile Include="IAnimal.cs" />
-    <Compile Include="IFactoryListItem.cs" />
     <Compile Include="IModel.cs" />
     <Compile Include="ISaveFileView.cs" />
     <Compile Include="IView.cs" />

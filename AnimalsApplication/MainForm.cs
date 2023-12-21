@@ -19,17 +19,15 @@ namespace AnimalsApplication
     public partial class MainForm : Form, IView
     {
         private readonly Presenter presenter;
-        private readonly List<string> animalItems = new List<string>();
         private readonly List<IAnimal> animalListItems = new List<IAnimal>();
         private IAnimal selectedAnimal;
 
-        public event NeedToApplyFilterEventHandler NeedToApplyFilter;       //Событие вызывается при необходимости отфильтровать список
+        public event NeedToApplyFilterEventHandler NeedToApplyFilter;           //Событие вызывается при необходимости отфильтровать список
 
         public MainForm()
         {
             InitializeComponent();
 
-            //SetUpListBox(animalsListBox, animalItems);                                                //Настраиваем ListBox1
             SetUpListBox(animalsListBox, animalListItems);                                              //Настраиваем ListBox1
 
             SetUpListBox(filteredListBox, new List<string>());                                          //Настраиваем ListBox2
@@ -61,6 +59,16 @@ namespace AnimalsApplication
         }
 
         public ISaveFileView SaveFileObj => new SaveFileDataObject();
+
+        public string ClassDefinition
+        {
+            get => label3.Text;
+            set => label3.Text = value;
+        }
+
+        public IAnimal SelectedAnimal => selectedAnimal;
+
+        public string AnimalName => nameTextBox.Text;
         #endregion
 
         //--------------------------------------------------------------------------------------------------------------
@@ -83,6 +91,12 @@ namespace AnimalsApplication
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void AddButton_Click(object sender, EventArgs e) => CreateNewAnimal();
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            presenter.DeleteAnimal();
+            NeedToApplyFilter(new NeedToApplyFilterEventArgs(selectedAnimal.Class, animalListItems));
+        }
 
 
         /// <summary>
@@ -116,24 +130,30 @@ namespace AnimalsApplication
         {
             presenter.SaveAs();
         }
+
+        private void animalsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListBox lb = sender as ListBox;
+            if (lb != null && presenter != null)
+            {
+                selectedAnimal = lb.SelectedItem as IAnimal;
+                presenter.GetClassDefinition(this);
+            }
+        }
         #endregion
 
         //--------------------------------------------------------------------------------------------------------------
         #region Открытые методы
-        /// <summary>
-        /// Добавляет животное в listBox
-        /// </summary>
-        /// <param name="item"></param>
-        public void AddAnimalToList(string item)
-        {
-            animalItems.Add(item);                                                  //Добавляем животное к коллекции
-            (animalsListBox.DataSource as BindingSource).ResetBindings(false);      //Обновляем источник данных в listBox
-        }
-
         public void AddAnimalToList(IAnimal animal)
         {
             animalListItems.Add(animal);                                            //Добавляем животное к коллекции
             (animalsListBox.DataSource as BindingSource).ResetBindings(false);      //Обновляем источник данных в listBox
+        }
+
+        public void DeleteAnimalFromList(IAnimal animal)
+        {
+            animalListItems.Remove(animal);
+            (animalsListBox.DataSource as BindingSource).ResetBindings(false);
         }
 
         public void UpdateAnimalList() => (animalsListBox.DataSource as BindingSource).ResetBindings(false);
@@ -198,24 +218,5 @@ namespace AnimalsApplication
             else MessageBox.Show("Не все обязательные поля заполнены!", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
         #endregion
-
-        private void animalsListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (animalsListBox != null && presenter != null)
-            {
-                selectedAnimal = animalsListBox.SelectedItem as IAnimal;
-                presenter.GetClassDefinition(this);
-            }
-        }
-
-        public string ClassDefinition
-        {
-            get => label3.Text;
-            set => label3.Text = value;
-        }
-
-        public IAnimal SelectedAnimal => selectedAnimal;
-
-        public string AnimalName => nameTextBox.Text;
     }
 }

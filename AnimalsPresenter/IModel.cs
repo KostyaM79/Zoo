@@ -13,15 +13,7 @@ namespace AnimalsModel
     /// </summary>
     public interface IModel
     {
-        //IAnimal CreateAnimal(IFactoryListItem factory, string animalType, string name, List<IAnimal>list, Presenter presenter);
-
-        void CreateAnimal(IFactoryListItem factory, string animalType, string name, IView viev, Presenter presenter);
-
-        IEnumerable<IFactoryListItem> GetFactories();
-
-        IFactoryListItem GetNullFactory();
-
-        IFactoryListItem GetFactory(string animalClass);
+        void CreateAnimal(string className, string animalType, string name, IView viev, Presenter presenter);
 
         void LoadAnimals();
 
@@ -29,8 +21,6 @@ namespace AnimalsModel
 
         List<IAnimal> GetAnimalItems();
 
-        string GetAnimalClass(string animalType);
-
-        string GetAnimalClassDefinition(string animalType);
+        void DeleteAnimal(IAnimal animal);
     }
 }

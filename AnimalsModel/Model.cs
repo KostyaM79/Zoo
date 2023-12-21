@@ -36,9 +36,18 @@ namespace AnimalsModel
         /// <param name="factoryItem"></param>
         /// <param name="animalType"></param>
         /// <returns></returns>
-        public IAnimal CreateAnimal(IFactoryListItem factoryItem, string animalType, string name, List<IAnimal> list, Presenter presenter)
+        //public IAnimal CreateAnimal(IFactoryListItem factoryItem, string animalType, string name, List<IAnimal> list, Presenter presenter)
+        //{
+        //    AbstractAnimal animal = (factoryItem as FactoryItem).Factory.CreateAnimal(animalType, name, Repository);
+        //    animal.AddYourselfToList(new AnimalListDataSource(list));
+        //    return animal;
+        //}
+
+        public void CreateAnimal(IFactoryListItem factoryItem, string animalType, string name, IView view, Presenter presenter)
         {
-            return (factoryItem as FactoryItem).Factory.CreateAnimal(animalType, name, Repository);
+            AbstractAnimal animal = (factoryItem as FactoryItem).Factory.CreateAnimal(animalType, name, Repository);
+            animal.AddYourselfToList(new AnimalListDataSource(view));
+            //return animal;
         }
 
         /// <summary>

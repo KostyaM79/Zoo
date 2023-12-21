@@ -29,11 +29,11 @@ namespace AnimalsApplication
         {
             InitializeComponent();
 
-            //SetUpListBox(animalsListBox, animalItems);                                  //Настраиваем ListBox1
-            SetUpListBox(animalsListBox, animalListItems);                                  //Настраиваем ListBox1
+            //SetUpListBox(animalsListBox, animalItems);                                                //Настраиваем ListBox1
+            SetUpListBox(animalsListBox, animalListItems);                                              //Настраиваем ListBox1
 
-            SetUpListBox(filteredListBox, new List<string>());                   //Настраиваем ListBox2
-            presenter = AnimalsApp.BuildSystem(this, new Repository(), new Library());  //Собираем систему
+            SetUpListBox(filteredListBox, new List<string>());                                          //Настраиваем ListBox2
+            presenter = AnimalsApp.BuildSystem(this, new Repository(), new Library());                  //Собираем систему
             NeedToApplyFilter += e => presenter.ApplyFilterToList(e.AnimalList, e.AnimalClassName);
         }
 
@@ -183,7 +183,7 @@ namespace AnimalsApplication
             //Если все необходимые данные введены пользователем, добавляем новое животное
             if (presenter.ValidateData(classesComboBox.SelectedItem, typeTextBox.Text, nameTextBox.Text))
             {
-                presenter.CreateNewAnimal(this);                //Добавляем новое животное на основе введённых данных
+                presenter.CreateNewAnimal();                    //Добавляем новое животное на основе введённых данных
 
                 NeedToApplyFilter(                              //Вызываем событие инициирующее фильтрацию второго списка животных
                     new NeedToApplyFilterEventArgs(             //
@@ -191,6 +191,7 @@ namespace AnimalsApplication
                         animalListItems));                      //
 
                 typeTextBox.Clear();                            //Очищаем поле ввода вида животного
+                nameTextBox.Clear();
             }
 
             //Если не все необходимые данные введены, выводим соответствующее сообщение

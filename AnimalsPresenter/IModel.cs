@@ -13,7 +13,9 @@ namespace AnimalsModel
     /// </summary>
     public interface IModel
     {
-        IAnimal CreateAnimal(IFactoryListItem factory, string animalType, string name, List<IAnimal>list, Presenter presenter);
+        //IAnimal CreateAnimal(IFactoryListItem factory, string animalType, string name, List<IAnimal>list, Presenter presenter);
+
+        void CreateAnimal(IFactoryListItem factory, string animalType, string name, IView viev, Presenter presenter);
 
         IEnumerable<IFactoryListItem> GetFactories();
 

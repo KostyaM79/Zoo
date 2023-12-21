@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractAnimal.cs" />
+    <Compile Include="AnimalListDataSource.cs" />
     <Compile Include="FactoryItem.cs" />
     <Compile Include="IAnimalLibrary.cs" />
     <Compile Include="IdChangedEventHandler.cs" />

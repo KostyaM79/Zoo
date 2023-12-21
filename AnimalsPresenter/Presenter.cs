@@ -44,11 +44,13 @@ namespace AnimalsPresenter
         /// <summary>
         /// Добавляет новое животное
         /// </summary>
-        public void CreateNewAnimal(IView v)
+        public void CreateNewAnimal()
         {
-            IFactoryListItem concreteFactory = model.GetFactory(v.SelectedAnimalClass);
-            IAnimal animal = model.CreateAnimal(concreteFactory, v.AnimalType, v.AnimalName, v.Animals, this);  //Создаём новое животное, используя фабрику
-            v.AddAnimalToList(animal);
+            IFactoryListItem concreteFactory = model.GetFactory(view.SelectedAnimalClass);
+            //IAnimal animal = model.CreateAnimal(concreteFactory, view.AnimalType, view.AnimalName, view.Animals, this);  //Создаём новое животное, используя фабрику
+            model.CreateAnimal(concreteFactory, view.AnimalType, view.AnimalName, view, this);
+            //animal.AddYourselfToList(view.Animals);
+            view.UpdateAnimalList();
         }
 
         /// <summary>

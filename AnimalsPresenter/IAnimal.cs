@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AnimalsModel;
 
 namespace AnimalsPresenter
 {
@@ -13,5 +14,6 @@ namespace AnimalsPresenter
         string Class { get; }
         string Type { get; }
         string ClassDefinition { get; }
+        //void AddYourselfToList(List<IAnimal> list);
     }
 }

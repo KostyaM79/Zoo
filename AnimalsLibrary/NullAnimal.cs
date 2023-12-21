@@ -22,6 +22,6 @@ namespace AnimalsLibrary
         /// Вызывает метод обратного вызова, дла обработки нулевого объекта
         /// </summary>
         /// <param name="list"></param>
-        public override void AddYourselfToList(List<string> list, ShowMessageCallBack callBack) => callBack();
+        public override void AddYourselfToList(AnimalListDataSource dataSource) => dataSource.ShowNotAddedMessage();
     }
 }

@@ -41,9 +41,9 @@ namespace AnimalsModel
         /// Добавляет данный экземпляр к коллекции
         /// </summary>
         /// <param name="list"></param>
-        public virtual void AddYourselfToList(List<string> list, ShowMessageCallBack callBack)
+        public virtual void AddYourselfToList(AnimalListDataSource dataSource)
         {
-            list.Add(Type);
+            dataSource.Add(this);
         }
 
         public void SetId(LastId lastId) => Id = lastId.Id;

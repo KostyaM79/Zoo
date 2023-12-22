@@ -43,11 +43,20 @@ namespace AnimalsModel
             animal.AddYourselfToList(new AnimalListDataSource(view));
         }
 
+        /// <summary>
+        /// Удаляет животное из репозитория
+        /// </summary>
+        /// <param name="animal"></param>
         public void DeleteAnimal(IAnimal animal)
         {
             Repository.Delete(animal as AbstractAnimal);
         }
 
+        /// <summary>
+        /// Возвращает фабрику, соответствующую переданному классу животного
+        /// </summary>
+        /// <param name="animalClass"></param>
+        /// <returns></returns>
         private IFactory GetFactory(string animalClass)
         {
             IFactory factory = AnimalLibrary.GetNullFactory();

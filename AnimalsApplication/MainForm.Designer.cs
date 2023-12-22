@@ -45,9 +45,9 @@ namespace AnimalsApplication
             this.cancelButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.acceptButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.filteredListBox = new System.Windows.Forms.ListBox();
             this.animalsListBox = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -129,7 +129,6 @@ namespace AnimalsApplication
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(774, 73);
             this.label3.TabIndex = 2;
-            this.label3.Text = "label3";
             // 
             // tableLayoutPanel4
             // 
@@ -277,6 +276,18 @@ namespace AnimalsApplication
             this.acceptButton.UseVisualStyleBackColor = true;
             this.acceptButton.Click += new System.EventHandler(this.AddButton_Click);
             // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(614, 11);
+            this.button1.Margin = new System.Windows.Forms.Padding(10);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Удалить";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.DeleteButton_Click);
+            // 
             // filteredListBox
             // 
             this.filteredListBox.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -298,18 +309,6 @@ namespace AnimalsApplication
             this.animalsListBox.Size = new System.Drawing.Size(380, 327);
             this.animalsListBox.TabIndex = 2;
             this.animalsListBox.SelectedIndexChanged += new System.EventHandler(this.animalsListBox_SelectedIndexChanged);
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(614, 11);
-            this.button1.Margin = new System.Windows.Forms.Padding(10);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Удалить";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
             // MainForm
             // 

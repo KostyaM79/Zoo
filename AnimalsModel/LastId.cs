@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace AnimalsModel
 {
+    /// <summary>
+    /// Представляет генератор Id
+    /// </summary>
     public class LastId
     {
         public event IdChangedEventHandler IdChanged;
@@ -14,11 +17,18 @@ namespace AnimalsModel
 
         private int id;
 
+        /// <summary>
+        /// Возвращает Id. При каждом обращении к данному свойству увеличивает Id на 1
+        /// </summary>
         public int Id
         {
             get { id++; IdChanged(); return id; }
         }
 
+        /// <summary>
+        /// Сохраняет Id в файл
+        /// </summary>
+        /// <param name="serializer"></param>
         public void Serialize(IIdSerialize serializer)
         {
             serializer.Serialize(id, "lastId");

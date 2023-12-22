@@ -31,7 +31,7 @@ namespace AnimalsRepository
         public List<AbstractAnimal> Animals => animals;
 
         /// <summary>
-        /// Добавляет животное в коллекцию
+        /// Добавляет животное в коллекцию и генерирует ему новый Id
         /// </summary>
         /// <param name="animal"></param>
         public void AddAndGenerateId(AbstractAnimal animal)
@@ -40,11 +40,19 @@ namespace AnimalsRepository
             animals.Add(animal);        //Добавляем животное в репозиторий
         }
 
+        /// <summary>
+        /// Добавляет животное в коллекцию
+        /// </summary>
+        /// <param name="animal"></param>
         public void Add(AbstractAnimal animal)
         {
             animals.Add(animal);        //Добавляем животное в репозиторий
         }
 
+        /// <summary>
+        /// Удаляет животное
+        /// </summary>
+        /// <param name="animal"></param>
         public void Delete(AbstractAnimal animal)
         {
             animals.Remove(animal);

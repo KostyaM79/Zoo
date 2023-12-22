@@ -88,19 +88,22 @@ namespace AnimalsPresenter
         /// </summary>
         /// <param name="list"></param>
         /// <param name="animalClassName"></param>
-        public void ApplyFilterToList(List<IAnimal>list, string animalClassName)
+        public void ApplyFilterToList(List<IAnimal> list, string animalClassName)
         {
-            List<IAnimal> items = (from item in list                                            //Отбираем животных выбранного пользователем класса
-                           where (animalClassName == item.Class) select item).ToList();         //
+            List<IAnimal> items = (from item in list                                                    //Отбираем животных выбранного пользователем класса
+                                   where (animalClassName == item.Class) select item).ToList();         //
 
             view.AnimalListItems = items.Count() > 0 ? items : null;
         }
 
-        public void GetClassDefinition(IView view)
-        {
-            view.ClassDefinition = view.SelectedAnimal.ClassDefinition;
-        }
+        /// <summary>
+        /// Получает определение класса животного
+        /// </summary>
+        public void GetClassDefinition() => view.ClassDefinition = view.SelectedAnimal.ClassDefinition;
 
+        /// <summary>
+        /// Удаляет животное
+        /// </summary>
         public void DeleteAnimal()
         {
             view.DeleteAnimalFromList(view.SelectedAnimal);

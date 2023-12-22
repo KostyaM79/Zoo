@@ -30,7 +30,7 @@ namespace AnimalsApplication
 
             SetUpListBox(animalsListBox, animalListItems);                                              //Настраиваем ListBox1
 
-            SetUpListBox(filteredListBox, new List<string>());                                          //Настраиваем ListBox2
+            SetUpListBox(filteredListBox, new List<IAnimal>());                                         //Настраиваем ListBox2
             presenter = AnimalsApp.BuildSystem(this, new Repository(), new Library());                  //Собираем систему
             NeedToApplyFilter += e => presenter.ApplyFilterToList(e.AnimalList, e.AnimalClassName);
         }
@@ -92,10 +92,16 @@ namespace AnimalsApplication
         /// <param name="e"></param>
         private void AddButton_Click(object sender, EventArgs e) => CreateNewAnimal();
 
+        /// <summary>
+        /// Обрабатывает нажатие кнопки "Удалить"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             presenter.DeleteAnimal();
-            NeedToApplyFilter(new NeedToApplyFilterEventArgs(selectedAnimal.Class, animalListItems));
+            if (classesComboBox.SelectedItem != null)
+                NeedToApplyFilter(new NeedToApplyFilterEventArgs(classesComboBox.SelectedItem.ToString(), animalListItems));
         }
 
 
@@ -116,29 +122,24 @@ namespace AnimalsApplication
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CancelButton_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
+        private void CancelButton_Click(object sender, EventArgs e) => Close();
 
         /// <summary>
         /// Инициирует сохранение репозитория в одном из форматов
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            presenter.SaveAs();
-        }
+        private void SaveButton_Click(object sender, EventArgs e) => presenter.SaveAs();
 
+        /// <summary>
+        /// Обрабатывает выбор животного в любом из списков
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void animalsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ListBox lb = sender as ListBox;
-            if (lb != null && presenter != null)
-            {
-                selectedAnimal = lb.SelectedItem as IAnimal;
-                presenter.GetClassDefinition(this);
-            }
+            GetClassDefinition(lb);
         }
         #endregion
 
@@ -181,13 +182,6 @@ namespace AnimalsApplication
         /// <param name="lb"></param>
         /// <param name="bs"></param>
         /// <param name="list"></param>
-        private void SetUpListBox(ListBox lb, List<string> list)
-        {
-            BindingSource bs = new BindingSource();
-            bs.DataSource = list;       //Устанавливаем переданную коллекцию животных в качестве источника данных в объекте привязки данных
-            lb.DataSource = bs;         //Добавляем объект привязки данных в lixtBox
-        }
-
         private void SetUpListBox(ListBox lb, List<IAnimal> list)
         {
             BindingSource bs = new BindingSource();
@@ -212,10 +206,27 @@ namespace AnimalsApplication
 
                 typeTextBox.Clear();                            //Очищаем поле ввода вида животного
                 nameTextBox.Clear();
+                typeTextBox.Focus();
             }
 
             //Если не все необходимые данные введены, выводим соответствующее сообщение
             else MessageBox.Show("Не все обязательные поля заполнены!", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
+        /// <summary>
+        /// Возыращает определение класса животного
+        /// </summary>
+        /// <param name="lb"></param>
+        private void GetClassDefinition(ListBox lb)
+        {
+            if (lb != null && presenter != null)
+            {
+                if (lb.SelectedItem != null)
+                {
+                    selectedAnimal = lb.SelectedItem as IAnimal;
+                    presenter.GetClassDefinition();
+                }
+            }
         }
         #endregion
     }

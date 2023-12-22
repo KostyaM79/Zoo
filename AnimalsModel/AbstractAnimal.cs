@@ -21,8 +21,14 @@ namespace AnimalsModel
             Name = name;
         }
 
+        /// <summary>
+        /// Возвращает Id животного
+        /// </summary>
         public int Id { get; private set; }
 
+        /// <summary>
+        /// Возвращает имя животного
+        /// </summary>
         public string Name { get; private set; }
 
         /// <summary>
@@ -30,6 +36,9 @@ namespace AnimalsModel
         /// </summary>
         public abstract string Class { get; }
 
+        /// <summary>
+        /// Возвращает определение класса животного
+        /// </summary>
         public abstract string ClassDefinition { get; }
 
         /// <summary>
@@ -46,6 +55,10 @@ namespace AnimalsModel
             dataSource.Add(this);
         }
 
+        /// <summary>
+        /// Устанавливает Id
+        /// </summary>
+        /// <param name="lastId"></param>
         public void SetId(LastId lastId) => Id = lastId.Id;
 
         public override string ToString() => $"{Class}: {Type}, {Name}";

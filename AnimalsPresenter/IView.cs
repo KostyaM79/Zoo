@@ -13,8 +13,6 @@ namespace AnimalsView
     /// </summary>
     public interface IView
     {
-        //event NeedToApplyFilterEventHandler NeedToApplyFilter;
-
         /// <summary>
         /// Возвращает фабрику
         /// </summary>
@@ -54,12 +52,25 @@ namespace AnimalsView
         /// <param name="message"></param>
         void ShowMessage(string message);
 
+        /// <summary>
+        /// Возвращает определение класса животного
+        /// </summary>
         string ClassDefinition { get; set; }
 
+        /// <summary>
+        /// Возвращает выбранное животное
+        /// </summary>
         IAnimal SelectedAnimal { get; }
 
+        /// <summary>
+        /// Возвращает имя животного
+        /// </summary>
         string AnimalName { get; }
 
+        /// <summary>
+        /// Удаляет животное из списка на форме
+        /// </summary>
+        /// <param name="animal"></param>
         void DeleteAnimalFromList(IAnimal animal);
     }
 }

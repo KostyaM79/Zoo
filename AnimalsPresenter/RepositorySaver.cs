@@ -17,11 +17,12 @@ namespace AnimalsPresenter
         /// Получает от пользователя данные для сохранения репозитория
         /// </summary>
         /// <param name="filterStr"></param>
-        public void GetDataForSave(string filterStr)
+        public bool GetDataForSave(string filterStr)
         {
             saveFileViewObject.GetData(filterStr);
             FilterIndex = saveFileViewObject.FilterIndex;
             FilePath = saveFileViewObject.FilePath;
+            return saveFileViewObject.DataReceived;
         }
 
         /// <summary>

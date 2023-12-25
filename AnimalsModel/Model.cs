@@ -80,8 +80,8 @@ namespace AnimalsModel
         {
             IEnumerable<IWriter> writers = Repository.GetWriters();
             string filterStr = GetFilterString(writers);
-            saver.GetDataForSave(filterStr);
-            writers.ElementAt(saver.FilterIndex - 1).Write(Repository.Animals, saver.FilePath);
+            if (saver.GetDataForSave(filterStr))
+                writers.ElementAt(saver.FilterIndex - 1).Write(Repository.Animals, saver.FilePath);
         }
 
         /// <summary>

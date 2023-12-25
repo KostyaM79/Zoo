@@ -22,6 +22,11 @@ namespace AnimalsView
         int FilterIndex { get; }
 
         /// <summary>
+        /// Возвращает значение, указывающее, были ли получены данные для сохранения файла - true, или нет - false
+        /// </summary>
+        bool DataReceived { get; }
+
+        /// <summary>
         /// Открывает диалоговое окно для сохранения файла и инициализирует свойства полученными от пользователя данными
         /// </summary>
         /// <param name="filterStr"></param>

@@ -14,6 +14,7 @@ namespace AnimalsView
     {
         private int index = 0;
         private string path = null;
+        private bool dataReceived = false;
 
         /// <summary>
         /// Возвращает путь для сохранения файла
@@ -24,6 +25,8 @@ namespace AnimalsView
         /// Возвращает индекс выбранного пользователем формата файла
         /// </summary>
         public int FilterIndex => index;
+
+        public bool DataReceived => dataReceived;
 
         /// <summary>
         /// Получает данные от пользователя с использованием диалогового окна SaveFileDialog
@@ -47,6 +50,7 @@ namespace AnimalsView
         {
             index = filterIndex;
             path = filePath;
+            dataReceived = true;
         }
     }
 }

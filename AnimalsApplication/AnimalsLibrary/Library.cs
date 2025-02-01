@@ -16,13 +16,13 @@ namespace AnimalsLibrary
         /// <returns></returns>
         public IEnumerable<IFactory> GetFactoryCollection()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();        //Получаем текущую сборку
+            Assembly assembly = Assembly.GetExecutingAssembly();        // Получаем текущую сборку
 
-            Type[] types = assembly.GetTypes();                         //Получаем все типы данной сборки
+            Type[] types = assembly.GetTypes();                         // Получаем все типы данной сборки
 
-            List<Type> factoryTypes = GetFactories(types);              //Отбираем из полученных типов только фабрики
+            List<Type> factoryTypes = GetFactories(types);              // Отбираем из полученных типов только фабрики
 
-            List<IFactory> factories = new List<IFactory>();            //Создаём коллекцию для экземпляров фабрик
+            List<IFactory> factories = new List<IFactory>();            // Создаём коллекцию для экземпляров фабрик
 
             //Заполняем коллекцию экземплярами фабрик
             foreach (Type temp in factoryTypes)
@@ -30,7 +30,7 @@ namespace AnimalsLibrary
                 factories.Add(temp.GetConstructor(new Type[] { }).Invoke(new object[] { }) as IFactory);
             }
 
-            return factories;                                           //Возвращаем коллекцию фабрик
+            return factories;                                           // Возвращаем коллекцию фабрик
         }
 
         public IFactory GetNullFactory()
